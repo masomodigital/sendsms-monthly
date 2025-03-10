@@ -46,11 +46,32 @@
         button:hover {
             background-color: #218838;
         }
+        .black-button {
+            background-color: black;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 4px;
+            margin-top: 10px;
+            display: inline-block;
+            text-decoration: none;
+            text-align: center;
+            font-size: 16px;
+        }
+        .black-button:hover {
+            background-color: #333;
+        }
     </style>
 </head>
 <body>
 
-    <h2>Send SMS - Monthly Plan</h2>
+    <h3>Monthly Plan</h3>
+
+    <!-- Black Button for Checking Expiry Days -->
+    <a href="https://masomodigital.github.io/eligibiltycheck-FREESMS/" class="black-button">CHECK DAYS TO MY EXPIRY</a>
+
     <form id="smsForm">
         <!-- Hidden Email Field -->
         <input type="hidden" name="email" value="admin@sherton.website">
