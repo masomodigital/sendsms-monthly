@@ -64,14 +64,13 @@
         .black-button:hover {
             background-color: #333;
         }
-        #responseMessage {
+        .success-message {
+            color: green;
             font-weight: bold;
         }
-        .success {
-            color: green;
-        }
-        .error {
+        .error-message {
             color: red;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -106,11 +105,12 @@
     <script>
         document.getElementById("smsForm").addEventListener("submit", function(event) {
             event.preventDefault();
-            var responseMessage = document.getElementById("responseMessage");
-            responseMessage.innerText = "Wait. Sending SMS...";
-            responseMessage.className = "";
-
             var formData = new FormData(this);
+
+            document.getElementById("responseMessage").innerText = "Wait. Sending SMS...";
+            document.getElementById("responseMessage").className = "success-message";
+
+            // Convert form data to URL-encoded string
             var params = new URLSearchParams();
             for (var pair of formData.entries()) {
                 params.append(pair[0], pair[1]);
@@ -124,18 +124,20 @@
             })
             .then(response => response.text())
             .then(data => {
-                responseMessage.innerText = data;
-                responseMessage.className = data.includes("success") ? "success" : "error";
-
+                document.getElementById("responseMessage").innerText = data;
+                document.getElementById("responseMessage").className = data.includes("Error") ? "error-message" : "success-message";
+                
+                // Reset the form
                 document.getElementById("smsForm").reset();
 
+                // Clear message after 3 seconds
                 setTimeout(() => {
-                    responseMessage.innerText = "";
+                    document.getElementById("responseMessage").innerText = "";
                 }, 3000);
             })
             .catch(error => {
-                responseMessage.innerText = "Error sending SMS.";
-                responseMessage.className = "error";
+                document.getElementById("responseMessage").innerText = "Error sending SMS.";
+                document.getElementById("responseMessage").className = "error-message";
             });
         });
     </script>
