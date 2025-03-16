@@ -14,7 +14,7 @@
             color: red;
         }
         h3 {
-            color: red;
+            color: red; /* Set heading color to red */
         }
         form {
             display: inline-block;
@@ -35,7 +35,7 @@
             border-radius: 4px;
         }
         textarea {
-            height: 150px;
+            height: 150px; /* Adjusted for 10 lines */
         }
         button {
             background-color: #28a745;
@@ -64,44 +64,60 @@
         .black-button:hover {
             background-color: #333;
         }
+        #responseMessage {
+            font-weight: bold;
+        }
         .success {
             color: green;
-            font-weight: bold;
         }
         .error {
             color: red;
-            font-weight: bold;
         }
     </style>
 </head>
 <body>
+
     <h3>Monthly Plan</h3>
+
+    <!-- Black Button for Checking Expiry Days -->
     <a href="https://masomodigital.github.io/eligibiltycheck-FREESMS/" class="black-button">CHECK DAYS TO MY EXPIRY</a>
+
     <form id="smsForm">
+        <!-- Hidden Email Field -->
         <input type="hidden" name="email" value="admin@sherton.website">
+
         <label for="message">Message (Max 147 chars):</label>
         <textarea id="message" name="message" maxlength="145" rows="10" required></textarea>
+
         <label for="userId">User ID / PIN:</label>
         <input type="text" id="userId" name="userId" required>
+
         <label for="phoneNumber">Recipient Phone Number:</label>
         <input type="text" id="phoneNumber" name="phoneNumber" required>
+
         <label for="senderPhone">Your Phone Number:</label>
         <input type="text" id="senderPhone" name="senderPhone" required>
+
         <button type="submit">Send SMS</button>
     </form>
+
     <p id="responseMessage"></p>
+
     <script>
         document.getElementById("smsForm").addEventListener("submit", function(event) {
             event.preventDefault();
             var responseMessage = document.getElementById("responseMessage");
             responseMessage.innerText = "Wait. Sending SMS...";
             responseMessage.className = "";
+
             var formData = new FormData(this);
             var params = new URLSearchParams();
             for (var pair of formData.entries()) {
                 params.append(pair[0], pair[1]);
             }
+
             var scriptURL = "https://script.google.com/macros/s/AKfycbxtIkX3TNJXDZgjSxiEphA1eVqkJ4D7CKQUUoGvWG6cnRr4jTV17bRV78zLNEqNayx2-Q/exec";
+
             fetch(scriptURL, {
                 method: "POST",
                 body: params
@@ -110,7 +126,9 @@
             .then(data => {
                 responseMessage.innerText = data;
                 responseMessage.className = data.includes("success") ? "success" : "error";
+
                 document.getElementById("smsForm").reset();
+
                 setTimeout(() => {
                     responseMessage.innerText = "";
                 }, 3000);
@@ -121,5 +139,6 @@
             });
         });
     </script>
+
 </body>
 </html>
